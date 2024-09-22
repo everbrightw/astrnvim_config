@@ -49,10 +49,16 @@ return {
       --   return true
       -- end
     },
-    -- enable servers that you already have installed without mason
+
     servers = {
-      -- "pyright"
+      -- Add clangd for C/C++ language support
+      clangd = {
+        cmd = { "clangd" },
+        filetypes = { "c", "cpp", "objc", "objcpp" },
+        root_dir = require('lspconfig').util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
+      },
     },
+
   },
 
   -- Configure require("lazy").setup() options
@@ -78,6 +84,10 @@ return {
   -- anything that doesn't fit in the normal config locations above can go here
   polish = function()
     -- Set up custom filetypes
+    vim.opt.tabstop = 4         -- Number of spaces tabs count for
+    vim.opt.shiftwidth = 4      -- Number of spaces for each indentation step
+    vim.opt.expandtab = true    -- Use spaces instead of tabs
+    vim.opt.softtabstop = 4     -- Number of spaces inserted when pressing tab
     -- vim.filetype.add {
     --   extension = {
     --     foo = "fooscript",
